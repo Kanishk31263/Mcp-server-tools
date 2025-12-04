@@ -1,0 +1,68 @@
+{
+  "colors": {
+    "primary": "#003366",
+    "secondary": "#00AEEF",
+    "accent": "#F5A623",
+    "background": "#FFFFFF",
+    "titleText": "#002244",
+    "bodyText": "#333333",
+    "divider": "#004C99",
+    "codeBackground": "#F4F5F7"
+  },
+
+  "fonts": {
+    "title": "Segoe UI Semibold",
+    "body": "Segoe UI",
+    "code": "Consolas"
+  },
+
+  "sizes": {
+    "companyName": 26,
+    "slideTitle": 30,
+    "subtitle": 20,
+    "body": 18,
+    "bullet": 18,
+    "code": 14,
+    "footer": 12,
+    "dividerTitle": 34
+  },
+
+  "logo": {
+    "path": "assets/company_logo.png",
+    "titleSlide": { "x": 0.3, "y": 0.2, "w": 2.2, "h": 1.0 },
+    "contentSlide": { "x": 11.5, "y": 0.1, "w": 1.5, "h": 0.8 },
+    "closingSlide": { "x": 0.3, "y": 5.0, "w": 2.0, "h": 0.9 }
+  },
+
+  "company": {
+    "name": [
+      "PRICEWATERHOUSECOOPERS",
+      "Technology & Digital Consulting"
+    ],
+    "department": "Digital Transformation & AI Solutions"
+  },
+
+  "presenter": {
+    "name": "KANISHK KUNAL",
+    "designation": "Senior Associate",
+    "team": "AI Engineering & Automation"
+  },
+
+  "slideTypes": {
+    "title": 0,
+    "plan": 1,
+    "divider": 2,
+    "content": 3,
+    "chart": 4,
+    "code": 5,
+    "quote": 6,
+    "closing": 7
+  },
+
+  "presentationTypes": {
+    "corporate": "Corporate Presentation",
+    "technical": "Technical Briefing",
+    "workshop": "Training / Workshop",
+    "proposal": "Solution Proposal"
+  }
+}
