@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PPT Generator UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        #log {
+            background: #111;
+            color: #0f0;
+            padding: 10px;
+            height: 250px;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+            font-family: monospace;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>PPT Generator – WebSocket UI</h1>
+
+    <label>Enter Topic:</label><br>
+    <input id="topic" type="text" placeholder="Enter topic (e.g., Xenomorph)" style="width: 300px;"><br>
+
+    <button onclick="sendTopic()">Generate PPT</button>
+
+    <h3>Logs:</h3>
+    <div id="log"></div>
+
+    <script>
+        let ws;
+
+        function log(msg) {
+            const logBox = document.getElementById("log");
+            logBox.textContent += msg + "\n";
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        // Connect WebSocket
+        function connectWS() {
+            ws = new WebSocket("ws://localhost:3000");
+
+            ws.onopen = () => log("🟢 WebSocket connected.");
+            ws.onmessage = (msg) => log("📩 Server: " + msg.data);
+            ws.onerror = (err) => log("❌ Error: " + err);
+            ws.onclose = () => log("🔴 Connection closed.");
+        }
+
+        // Send topic to server
+        function sendTopic() {
+            const topic = document.getElementById("topic").value.trim();
+            if (!topic) return alert("Enter a topic first!");
+
+            const payload = {
+                action: "generate_ppt",
+                topic: topic
+            };
+
+            ws.send(JSON.stringify(payload));
+            log("📤 Sent: " + JSON.stringify(payload));
+        }
+
+        connectWS();
+    </script>
+
+</body>
+</html>
