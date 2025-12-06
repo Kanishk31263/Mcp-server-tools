@@ -21,7 +21,7 @@ import {
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { generatePresentation, loadConfig, saveConfig } from './ppt-generator.js';
+import { generatePresentation } from './ppt-generator.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -150,6 +150,7 @@ data:
 // Handle tool calls
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
+  console.error('args',args,'name',name)
   
   try {
     switch (name) {
