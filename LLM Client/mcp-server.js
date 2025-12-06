@@ -15,7 +15,6 @@ const __dirname = path.dirname(__filename);
 // Build path to pptGeneratorServer/index.js
 const  MCP_server_path  = path.join(__dirname, "../pptGeneratorServer/index.js");
 const puter = init(process.env.PUPPER_AI_TOKEN);
-console.log(process.env.PUPPER_AI_TOKEN)
 
 const app = express();
 const PORT = process.env.PORT || 3000;
