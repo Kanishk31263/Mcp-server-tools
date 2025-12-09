@@ -13,8 +13,11 @@
     "@modelcontextprotocol/sdk": "^1.24.3",
     "@openrouter/sdk": "^0.2.9",
     "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "multer": "^2.0.2",
+    "pdf-parse": "^2.4.5",
     "puter": "^1.0.0",
     "ws": "^8.18.3"
   },

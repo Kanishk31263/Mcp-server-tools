@@ -33,10 +33,10 @@
 
     <h1>PPT Generator – WebSocket UI</h1>
 
-    <label>Enter Topic:</label><br>
-    <input id="topic" type="text" placeholder="Enter topic (e.g., Xenomorph)" style="width: 300px;"><br>
+    <label>Upload Resume PDF:</label><br>
+    <input id="pdfUpload" type="file" accept="application/pdf"><br><br>
 
-    <button onclick="sendTopic()">Generate PPT</button>
+    <button onclick="uploadAndGenerate()">Generate PPT</button>
 
     <h3>Logs:</h3>
     <div id="log"></div>
@@ -50,31 +50,58 @@
             logBox.scrollTop = logBox.scrollHeight;
         }
 
-        // Connect WebSocket
+        // ------------------------------
+        // CONNECT TO WEBSOCKET (3001)
+        // ------------------------------
         function connectWS() {
-            ws = new WebSocket("ws://localhost:3000");
+            ws = new WebSocket("ws://localhost:3001");
 
-            ws.onopen = () => log("🟢 WebSocket connected.");
-            ws.onmessage = (msg) => log("📩 Server: " + msg.data);
-            ws.onerror = (err) => log("❌ Error: " + err);
-            ws.onclose = () => log("🔴 Connection closed.");
-        }
-
-        // Send topic to server
-        function sendTopic() {
-            const topic = document.getElementById("topic").value.trim();
-            if (!topic) return alert("Enter a topic first!");
-
-            const payload = {
-                action: "generate_ppt",
-                topic: topic
-            };
-
-            ws.send(JSON.stringify(payload));
-            log("📤 Sent: " + JSON.stringify(payload));
+            ws.onopen = () => log("🟢 WebSocket connected (3001).");
+            ws.onmessage = (msg) => log("📩 WS Log: " + msg.data);
+            ws.onerror = (err) => log("❌ WS Error: " + err);
+            ws.onclose = () => log("🔴 WS Disconnected.");
         }
 
         connectWS();
+
+        // ------------------------------
+        // Upload PDF -> Trigger PPT Generation
+        // ------------------------------
+        async function uploadAndGenerate() {
+            const fileInput = document.getElementById("pdfUpload");
+
+            if (fileInput.files.length === 0) {
+                return alert("Please upload a PDF first!");
+            }
+
+            const pdfFile = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("resume", pdfFile);
+
+            log("📤 Uploading PDF to http://localhost:3000/upload-pdf ...");
+
+            try {
+                const response = await fetch("http://localhost:3000/upload-pdf", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+                log("📩 API (3000) Response: " + JSON.stringify(result));
+
+                // After upload success → trigger WS generation
+                const payload = {
+                    action: "generate_ppt"
+                };
+
+                ws.send(JSON.stringify(payload));
+                log("📤 Sent to WS (3001): " + JSON.stringify(payload));
+
+            } catch (err) {
+                log("❌ Upload Error: " + err);
+            }
+        }
+
     </script>
 
 </body>
